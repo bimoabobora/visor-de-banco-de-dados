@@ -1,0 +1,10 @@
+do to:
+
+atualizar banco de dados, (Feito)
+janela de remover informações, (Feito)
+alterar informações, (Feito)
+estilizar as telas,
+conexão dinamica com banco de dados,
+mensagens de erro,
+implementação de usuario e senha na aplicação,
+criação de tabelas*
