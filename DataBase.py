@@ -11,9 +11,13 @@ class DataBase:
         )
         self.cursor = self.conexao.cursor()
     
-    def CriarTabelas(self, nome, colunasArgs):
-        query = f"CREATE TABLE %s()"
-        self.cursor.execute()
+    def CriarTabelas(self, nome, StringQuery):
+        print(nome, StringQuery)
+
+        query = f"CREATE TABLE {nome} ({StringQuery})"
+        self.cursor.execute(query)
+
+        self.conexao.commit()
 
     def AdicionarInfo(self, info: list, tabela: str, colunas: list):
         for i in range(len(colunas)):

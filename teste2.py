@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from TelaBase import TelaBase
 
-root = tk.Tk()
+'''root = tk.Tk()
 
 class AdicionarInfoTela(TelaBase):
 
@@ -40,6 +40,10 @@ class AdicionarInfoTela(TelaBase):
        
 
 obj = AdicionarInfoTela(root, "testes", ["nome", "id"])
-obj.root.mainloop()
+obj.root.mainloop()'''
    
 
+s = 'tabela as1 INT(12) NOT NULL,' \
+'as2 INT(121) NOT NULL,'
+
+print(s.removesuffix(","))

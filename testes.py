@@ -1,22 +1,9 @@
-from TelaDeEntrada import TelaDeEntrada
-from TelaTabelas import TelaTabelas, AdicionarInfoTela
-from DataBase import DataBase
-import tkinter as tk
-from tkinter import ttk
+var = 0
+def test():
+    global var
+    var += 1
 
-db = DataBase()
+    print(var)
 
-'''info = db.getInfo("testes")
-db.AdicionarInfo(["Roberto1"], "testes", ["nome"])
-print(info)'''
-
-def test(*teste):
-    string = ""
-    for char in teste:
-        string += char
-        string += "\n"
-    print(string)
-
-colum1 = "id INT AUTO_INCRIMENT PRIMARY KEY"
-colum2 = "nome VARCHAR(255)"
-test(colum1, colum2)
+for _ in range(5):
+    test()

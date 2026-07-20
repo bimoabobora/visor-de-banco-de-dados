@@ -30,4 +30,4 @@ class GerenciadorDeTelas:
         self.root.mainloop()
 
 obj = GerenciadorDeTelas()
-obj.Mainloop(nome = "criarTabelas")
+obj.Mainloop(nome = "escolhaDeTabelas")
