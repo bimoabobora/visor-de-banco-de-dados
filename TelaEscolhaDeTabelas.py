@@ -39,11 +39,11 @@ class Coluna:
     nomeTabela = ""
     autoIncrement = None
     instancias = []
-    db = DataBase()
     
     
-    def __init__(self, frame):
+    def __init__(self, frame, db):
         self.frame = frame
+        self.db = db
         self.nomeTabela = tk.Entry(frame, width=15)
         self.nomeColuna = tk.Entry(frame, width=15)
         self.tipo = tk.StringVar(value=False)
@@ -167,6 +167,7 @@ class CriarTabelas(TelaBase):
         super().__init__(root)
         self.y = 40
         self.gerenciador = gerenciador
+        self.db = db
 
         self.frame = ttk.Frame(root)
         self.frame.grid(row=0, column=0, sticky="nsew")
@@ -202,7 +203,7 @@ class CriarTabelas(TelaBase):
         self.coluna.transformQuery()
 
     def Interface(self):
-        self.coluna = Coluna(self.frame)
+        self.coluna = Coluna(self.frame, self.db)
         if self.coluna.nomeTabela.winfo_children == 1:
             pass
         else:

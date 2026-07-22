@@ -1,16 +1,29 @@
 import mysql.connector 
+import json
 class DataBase:
     def __init__(self):
+
+        self.database()
+    
+    def connectDatabase(self, info: list):
+        with open("Data_Base_config.txt", "a") as f:
+            f.write(f"{info[0]}\n{info[1]}\n{info[2]}\n{info[3]}")
+
+    def database(self):
+        with open("config.json", "r") as f:
+            self.config = json.load(f)
+        
         self.conexao = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="lrm2",
-            database="mydatabase",
+            host= self.config["host"],
+            user= self.config["user"],
+            password= self.config["password"],
+            database= self.config["database"],
             use_pure = True,
             autocommit = True
-        )
+            )
         self.cursor = self.conexao.cursor()
-    
+
+
     def CriarTabelas(self, nome, StringQuery):
         print(nome, StringQuery)
 
