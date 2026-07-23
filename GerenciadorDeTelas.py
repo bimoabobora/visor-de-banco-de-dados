@@ -3,7 +3,7 @@ from tkinter import ttk
 
 from DataBase import DataBase
 from TelaDeEntrada import  TelaDatabase
-from TelaEscolhaDeTabelas import TelaEscolhaTabela, CriarTabelas, RemoverTabela
+from TelaEscolhaDeTabelas import TelaEscolhaTabela, CriarTabelas, RemoverTabela, AlterarTabela
 from TelaTabelas import TelaTabelas, AdicionarInfoTela, ExcluirInfo, AlterarInfo
 
 class GerenciadorDeTelas:
@@ -17,6 +17,7 @@ class GerenciadorDeTelas:
             self.telas= {
                 "dataBase": TelaDatabase(self.root, self),
                 "escolhaDeTabelas": TelaEscolhaTabela(self.root, self, self.db),
+                "alterarTabela": AlterarTabela(self.root, self, self.db),
                 "removerTabela": RemoverTabela(self.root, self, self.db),
                 "tabelas": TelaTabelas(self.root, self, self.db),
                 "telaAdicionarInfo": AdicionarInfoTela(self.root, self, self.db),

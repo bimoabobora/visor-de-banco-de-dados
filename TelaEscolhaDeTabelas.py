@@ -46,8 +46,9 @@ class TelaEscolhaTabela(TelaBase):
         self.interface()
 
     def botao(self):
-        tk.Button(self.frame, text="Criar Tabelas", command=lambda:self.criarTabelas()).place(relx=0.90, rely = 0.90)
-        tk.Button(self.frame, text="Remover Tabelas", command=lambda:self.removerTabelas()).place(relx=0.90, rely = 0.90)
+        tk.Button(self.frame, text="Criar Tabelas", command=lambda:self.criarTabelas()).place(relx=0.90, rely = 0.81)
+        tk.Button(self.frame, text="Remover Tabelas", command=lambda:self.removerTabelas()).place(relx=0.90, rely = 0.84)
+        tk.Button(self.frame, text="Alterar Tabelas", command=lambda:self.alterarTabelas()).place(relx=0.90, rely = 0.90)
         tk.Button(self.frame, text="Trocar Banco de Dados", command=lambda:self.database()).place(relx=0.90, rely = 0.87)
 
     def database(self):
@@ -55,6 +56,9 @@ class TelaEscolhaTabela(TelaBase):
 
     def removerTabelas(self):
         self.gerenciador.mostrarTela("removerTabela")
+
+    def alterarTabelas(self):
+        self.gerenciador.mostrarTela("alterarTabela")
 
 
 class RemoverTabela(TelaBase):
@@ -94,6 +98,43 @@ class RemoverTabela(TelaBase):
 
         self.db.removerTabela(info)
     
+class AlterarTabela(RemoverTabela):
+    def __init__(self, root, gerenciador, db):
+        super().__init__(root, gerenciador, db)
+
+        self.frame = ttk.Frame(root)
+        self.frame.grid(row=0, column=0, sticky="nsew")
+        
+        self.frame.grid_rowconfigure(0, weight=1)
+        self.frame.grid_columnconfigure(0, weight=1)
+        
+        self.gerenciador = gerenciador
+        self.db = db
+
+        self.interface()
+
+    def interface(self):
+        tk.Label(self.frame, text="Nome da Tabela Antiga").place(x= 0, y = 0)
+        tk.Label(self.frame, text="Nome da Tabela Nova").place(x= 0, y = 50)
+        self.Entrys()
+        self.Botao()
+
+    def Entrys(self):
+        self.nomeTabela = tk.Entry(self.frame)
+        self.nomeTabela.place(x = 150, y = 0)
+
+        self.nomeTabelaAtual = tk.Entry(self.frame)
+        self.nomeTabelaAtual.place(x = 150, y = 50)
+
+    def Botao(self):
+        tk.Button(self.frame, text="Alterar Tabela", command=lambda: self.alterarTabela()).place(relx = 0.9, rely = 0.85)
+        tk.Button(self.frame, text="Voltar", command=lambda:self.voltar()).place(relx = 0.9, rely = 0.88)
+
+    def alterarTabela(self):
+        info = [self.nomeTabela.get(), self.nomeTabelaAtual.get()]
+
+        self.db.alterarTabela(info)
+
 class Coluna:
     y=40
     nomeTabela = ""

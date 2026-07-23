@@ -28,6 +28,11 @@ class DataBase:
         self.cursor.execute(query)
         self.conexao.commit()
 
+    def alterarTabela(self, info):
+        query = f"RENAME TABLE {info[0]} TO {info[1]}"
+        self.cursor.execute(query)
+        self.conexao.commit()
+
     def CriarTabelas(self, nome, StringQuery):
         print(nome, StringQuery)
 
