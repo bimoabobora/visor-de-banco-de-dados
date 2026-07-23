@@ -2,10 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 
 from DataBase import DataBase
-from TelaDeEntrada import TelaDeEntrada, TelaDatabase
-from TelaEscolhaDeTabelas import TelaEscolhaTabela, CriarTabelas
+from TelaDeEntrada import  TelaDatabase
+from TelaEscolhaDeTabelas import TelaEscolhaTabela, CriarTabelas, RemoverTabela
 from TelaTabelas import TelaTabelas, AdicionarInfoTela, ExcluirInfo, AlterarInfo
-import json
 
 class GerenciadorDeTelas:
     def __init__(self):
@@ -16,16 +15,16 @@ class GerenciadorDeTelas:
             self.db = DataBase()
             
             self.telas= {
-                "entrada": TelaDeEntrada(self.root, self, self.db),
                 "dataBase": TelaDatabase(self.root, self),
                 "escolhaDeTabelas": TelaEscolhaTabela(self.root, self, self.db),
+                "removerTabela": RemoverTabela(self.root, self, self.db),
                 "tabelas": TelaTabelas(self.root, self, self.db),
                 "telaAdicionarInfo": AdicionarInfoTela(self.root, self, self.db),
                 "telaRemoverInfo": ExcluirInfo(self.root, self, self.db),
                 "telaAlterarInfo": AlterarInfo(self.root, self, self.db),
                 "criarTabelas": CriarTabelas(self.root, self, self.db)
-        }
-            self.Mainloop()
+            }
+            self.Mainloop("escolhaDeTabelas")
 
     def getDatabase(self):
         try:

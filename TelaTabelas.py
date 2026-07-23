@@ -15,19 +15,20 @@ class TelaTabelas(TelaBase):
         self.gerenciador = gerenciador
         self.tabela = None
         self.db = db
-
         
         if self.tabela == None:
             pass
         else:
             self.Interface()
 
+    
+
     def botoes(self):
         tk.Button(self.frame, text="voltar", command=lambda: self.voltar(self.gerenciador)).place(relx=0.94, rely=0.86)
-        tk.Button(self.frame, text="Adicionar Informações", command=lambda: self.adicionarInfo(self.gerenciador)).place(relx=0.94, rely=0.83)
-        tk.Button(self.frame, text="Excluir Informações", command=lambda: self.ExcluirInfo(self.gerenciador)).place(relx=0.94, rely=0.81)
-        tk.Button(self.frame, text="Alterar Informações", command=lambda: self.AlterarInfo(self.gerenciador)).place(relx=0.94, rely=0.76)
-        tk.Button(self.frame, text="atualizar", command=self.atualizar).place(x = 100, y= 100)
+        tk.Button(self.frame, text="Adicionar Informações", command=lambda: self.adicionarInfo(self.gerenciador)).place(relx=0.91, rely=0.83)
+        tk.Button(self.frame, text="Excluir Informações", command=lambda: self.ExcluirInfo(self.gerenciador)).place(relx=0.92, rely=0.80)
+        tk.Button(self.frame, text="Alterar Informações", command=lambda: self.AlterarInfo(self.gerenciador)).place(relx=0.92, rely=0.77)
+        
         
     def Interface(self):
         self.botoes()
@@ -126,10 +127,10 @@ class AdicionarInfoTela(TelaBase):
 
     def botoes(self):
         botao = tk.Button(self.frame, text="inserir dados", command=lambda: self.db.AdicionarInfo(self.getTextoDosLabels(), self.tabela, self.db.getColunas(self.tabela, comId=False)))
-        botao.place(x=50, y=80)
+        botao.place(relx= 0.9, rely = 0.85)
 
         botao = tk.Button(self.frame, text="Voltar", command=lambda: self.voltar(self.gerenciador))
-        botao.place(x=70, y=100)
+        botao.place(relx = 0.9 , rely=0.88)
 
     def atualizar(self):
         for widget in self.frame.winfo_children():
@@ -146,7 +147,7 @@ class AdicionarInfoTela(TelaBase):
         colunas = self.db.getColunas(self.tabela, comId=False)     
         for coluna in colunas:
             tk.Label(self.frame, text=coluna).place(relx=0.00,rely=yColuna)
-            yColuna += 0.1
+            yColuna += 0.05
     
     def Labels(self):
         x,y = 0.05, 0.00
@@ -179,21 +180,21 @@ class ExcluirInfo(AdicionarInfoTela):
 
     def botoes(self):
         botao = tk.Button(self.frame, text="Excluir dados", command=lambda: self.Excluir())
-        botao.place(x=50, y=80)
+        botao.place(relx=0.9, rely=0.82)
 
         botao = tk.Button(self.frame, text="Pesquisar", command=lambda: self.mostrarInfo())
-        botao.place(x=120, y=80)
+        botao.place(relx=0.9, rely=0.85)
 
         botao = tk.Button(self.frame, text="Voltar", command=lambda: self.voltar(self.gerenciador))
-        botao.place(x=70, y=100)
+        botao.place(relx=0.9, rely=0.88)
         
     def Labels(self):
     
         condicao = tk.Entry(self.frame)
-        condicao.place(x = 30, y = 0)
+        condicao.place(x = 80, y = 0)
 
         valor = tk.Entry(self.frame)
-        valor.place(x = 30 , y = 25)
+        valor.place(x = 50 , y = 25)
 
         self.listaDeObjetos.append(condicao)
         self.listaDeObjetos.append(valor)
@@ -235,13 +236,13 @@ class AlterarInfo(ExcluirInfo):
 
     def botoes(self):
         botao = tk.Button(self.frame, text="Alterar dados", command=lambda: self.Alterar())
-        botao.place(x=50, y=140)
+        botao.place(relx=0.9, rely=0.82)
 
         botao = tk.Button(self.frame, text="Pesquisar", command=lambda: self.mostrarInfo())
-        botao.place(x=50, y=120)
+        botao.place(relx=0.9, rely=0.85)
 
         botao = tk.Button(self.frame, text="Voltar", command=lambda: self.voltar(self.gerenciador))
-        botao.place(x=50, y=100)
+        botao.place(relx=0.9, rely=0.88)
     
     def showColunas(self):
         tk.Label(self.frame, text="Identificador").place(x = 0, y = 0)

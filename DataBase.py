@@ -23,6 +23,10 @@ class DataBase:
             )
         self.cursor = self.conexao.cursor()
 
+    def removerTabela(self, info):
+        query = f"DROP TABLE {info}"
+        self.cursor.execute(query)
+        self.conexao.commit()
 
     def CriarTabelas(self, nome, StringQuery):
         print(nome, StringQuery)
@@ -33,10 +37,12 @@ class DataBase:
         self.conexao.commit()
 
     def AdicionarInfo(self, info: list, tabela: str, colunas: list):
-        for i in range(len(colunas)):
-            query = f"INSERT INTO {tabela} ({colunas[i]}) VALUES (%s)"
-            self.cursor.execute(query, (info[i],))
-        
+        colunas_str = ", ".join(colunas)
+        placeholders = ", ".join(["%s"] * len(info))
+
+        query = f"INSERT INTO {tabela} ({colunas_str}) VALUES ({placeholders})"
+
+        self.cursor.execute(query, tuple(info))
         self.conexao.commit()
 
     def ExcluirInfo(self, tabela, condicao, valor):

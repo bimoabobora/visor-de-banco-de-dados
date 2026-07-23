@@ -5,12 +5,12 @@ class TelaEscolhaTabela(TelaBase):
     y = 0
     lista = []
 
-    def abrirTabela(self, gerenciador, tabela:tuple):
-        gerenciador.telas["tabelas"].setTabela(tabela[0])
-        gerenciador.mostrarTela("tabelas")
+    def abrirTabela(self, tabela:tuple):
+        self.gerenciador.telas["tabelas"].setTabela(tabela[0])
+        self.gerenciador.mostrarTela("tabelas")
 
-    def criarTabelas(self, gerenciador):
-        gerenciador.mostrarTela("criarTabelas")
+    def criarTabelas(self):
+        self.gerenciador.mostrarTela("criarTabelas")
 
     def __init__(self, root, gerenciador, db):
         super().__init__(root)
@@ -22,17 +22,77 @@ class TelaEscolhaTabela(TelaBase):
         self.frame.grid_rowconfigure(0, weight=1)
         self.frame.grid_columnconfigure(0, weight=1)
 
+        self.gerenciador = gerenciador
         self.db = db
-        tabelas = db.MostrarTabelas()
 
-        for nome in tabelas:
-           
-           botao = tk.Button(self.frame, text=nome, command=lambda t=nome: self.abrirTabela(gerenciador,t))
-           botao.place(relx=0.00,rely=self.y)
-           self.y += 0.05
+        self.interface()
         
-        tk.Button(self.frame, text="Criar Tabelas", command=lambda:self.criarTabelas(gerenciador)).place(relx=0.90, rely = 0.90)
-    
+
+    def interface(self):
+        self.botao()
+        self.botaoDasTabela()
+
+    def botaoDasTabela(self):
+        tabelas = self.db.MostrarTabelas()
+        for nome in tabelas:
+            botao = tk.Button(self.frame, text=nome, command=lambda t=nome: self.abrirTabela(t))
+            botao.place(relx=0.00,rely=self.y)
+            self.y += 0.05
+
+    def atualizar(self):
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+        self.y = 0
+        self.interface()
+
+    def botao(self):
+        tk.Button(self.frame, text="Criar Tabelas", command=lambda:self.criarTabelas()).place(relx=0.90, rely = 0.90)
+        tk.Button(self.frame, text="Remover Tabelas", command=lambda:self.removerTabelas()).place(relx=0.90, rely = 0.90)
+        tk.Button(self.frame, text="Trocar Banco de Dados", command=lambda:self.database()).place(relx=0.90, rely = 0.87)
+
+    def database(self):
+        self.gerenciador.mostrarTela("dataBase")
+
+    def removerTabelas(self):
+        self.gerenciador.mostrarTela("removerTabela")
+
+
+class RemoverTabela(TelaBase):
+    def __init__(self, root, gerenciador, db):
+        super().__init__(root)
+
+        self.frame = ttk.Frame(root)
+        self.frame.grid(row=0, column=0, sticky="nsew")
+        
+        self.frame.grid_rowconfigure(0, weight=1)
+        self.frame.grid_columnconfigure(0, weight=1)
+
+        self.gerenciador = gerenciador
+        self.db = db
+
+        self.interface()
+
+    def interface(self):
+        tk.Label(self.frame, text="Nome da Tabela").place(x= 0, y = 0)
+        self.Entrys()
+        self.Botao()
+
+    def Entrys(self):
+        self.nomeTabela = tk.Entry(self.frame)
+        self.nomeTabela.place(x = 100, y = 0)
+
+    def Botao(self):
+        tk.Button(self.frame, text="Remover Tabela", command=lambda: self.removerTabela()).place(relx = 0.9, rely = 0.85)
+        tk.Button(self.frame, text="Voltar", command=lambda:self.voltar()).place(relx = 0.9, rely = 0.88)
+
+    def voltar(self):
+        self.gerenciador.telas["escolhaDeTabelas"].atualizar()
+        self.gerenciador.mostrarTela("escolhaDeTabelas")
+
+    def removerTabela(self):
+        info = self.nomeTabela.get()
+
+        self.db.removerTabela(info)
     
 class Coluna:
     y=40
@@ -180,10 +240,10 @@ class CriarTabelas(TelaBase):
         self.Interface()
 
     def botoes(self):
-        tk.Button(self.frame, text="Voltar", command=lambda: self.voltar()).place(x=1250, y=600)
-        tk.Button(self.frame, text="Criar nova tabela", command=lambda: self.criarTabelas()).place(x=1250, y=800)
+        tk.Button(self.frame, text="Voltar", command=lambda: self.voltar()).place(relx=0.9, rely=0.88)
+        tk.Button(self.frame, text="Criar nova tabela", command=lambda: self.criarTabelas()).place(x=1250, y=700)
         tk.Button(self.frame, text="Nova coluna", command=lambda:self.Interface()).place(x=1250, y=40) 
-        tk.Button(self.frame, text="Excluir coluna", command=lambda:self.ExcluirColuna()).place(x=1300, y=40) 
+        tk.Button(self.frame, text="Excluir coluna", command=lambda:self.ExcluirColuna()).place(x=1350, y=40) 
 
     def ExcluirColuna(self):
         pass
